@@ -1,5 +1,5 @@
 import winston from 'winston';
-import { NODE_ENV } from './secret';
+import { secret } from './secret';
 
 const levels = {
     error: 0,
@@ -10,7 +10,7 @@ const levels = {
 }
 
 const level = () => {
-    return NODE_ENV === 'development' ? 'debug' : 'warn'
+    return secret.NODE_ENV === 'development' ? 'debug' : 'warn'
 }
 
 const colors = {

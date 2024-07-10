@@ -1,5 +1,5 @@
 import passport from "passport";
-import { ACCESS_TOKEN_SECRET } from "../config/secret";
+import { secret } from "../config/secret";
 import prisma from "../libs/client";
 import { JwtPayload } from "jsonwebtoken";
 import { VerifiedCallback } from "passport-jwt";
@@ -9,7 +9,7 @@ const ExtractJwt = require("passport-jwt").ExtractJwt;
 
 const options = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: ACCESS_TOKEN_SECRET,
+  secretOrKey: secret.ACCESS_TOKEN_SECRET,
 };
 
 const verify = async (payload: JwtPayload, done: VerifiedCallback) => {

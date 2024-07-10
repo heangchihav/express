@@ -14,7 +14,7 @@ import cluster from 'cluster';
 import os from 'os';
 
 // Import configuration and routes
-import { HOST_NAME, SERVER_PORT } from './config/secret';
+import { secret } from './config/secret';
 import rootRouter from './routes';
 import { errorMiddleware } from './middlewares/errors';
 import { corsOptions } from './config/corsOption';
@@ -127,7 +127,7 @@ if (cluster.isMaster) {
 
     // === Main Server Initialization ===
 
-    httpServer.listen(Number(SERVER_PORT), HOST_NAME, () => {
-        Logger.info(`Worker ${process.pid} running server at http://${HOST_NAME}:${SERVER_PORT}/`);
+    httpServer.listen(Number(secret.SERVER_PORT), secret.HOST_NAME, () => {
+        Logger.info(`Worker ${process.pid} running server at http://${secret.HOST_NAME}:${secret.SERVER_PORT}/`);
     });
 }

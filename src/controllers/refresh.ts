@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import prisma from "../libs/client";
-import { ACCESS_TOKEN_SECRET, NODE_ENV, REFRESH_TOKEN_SECRET } from "../config/secret";
+import { secret } from "../config/secret";
 import jwt from 'jsonwebtoken';
 import { CustomJwtPayload } from "../types/CustomJwtPayload";
 import { generateRefreshToken } from "../helpers/generateRefreshToken";
@@ -18,7 +18,7 @@ export const refresh = async (req: Request, res: Response) => {
     }
 
     const refreshTokenTrimmed = refreshToken.split(" ")[1];
-    const decodedRefreshToken = jwt.verify(refreshTokenTrimmed, REFRESH_TOKEN_SECRET) as CustomJwtPayload;
+    const decodedRefreshToken = jwt.verify(refreshTokenTrimmed, secret.REFRESH_TOKEN_SECRET) as CustomJwtPayload;
 
     const foundUser = await prisma.refreshToken.findUnique({
         where: {
@@ -33,7 +33,7 @@ export const refresh = async (req: Request, res: Response) => {
         where: { id: foundUser.id },
     });
 
-    const newAccessToken = jwt.sign({ userId: foundUser.userId }, ACCESS_TOKEN_SECRET, {
+    const newAccessToken = jwt.sign({ userId: foundUser.userId }, secret.ACCESS_TOKEN_SECRET, {
         expiresIn: "1m",
     });
 
@@ -48,7 +48,7 @@ export const refresh = async (req: Request, res: Response) => {
     // For web clients, set the refresh token in a secure cookie
     res.cookie("refreshToken", `Bearer ${newRefreshToken}`, {
         httpOnly: true,
-        secure: NODE_ENV === 'production', // set to true if using https
+        secure: secret.NODE_ENV === 'production', // set to true if using https
         sameSite: "strict", // adjust according to your needs
     }); 
 

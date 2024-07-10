@@ -1,5 +1,5 @@
 import passport from "passport";
-import { CALL_BACK_URL, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from "../config/secret";
+import { secret } from "../config/secret";
 import prisma from "../libs/client";
 import { Strategy as GoogleStrategy, Profile, VerifyCallback } from 'passport-google-oauth20'
 import { generateAccessToken } from "../helpers/generateAccessToken";
@@ -7,9 +7,9 @@ import { generateRefreshToken } from "../helpers/generateRefreshToken";
 
 
 const options = {
-  clientID: GOOGLE_CLIENT_ID,
-  clientSecret: GOOGLE_CLIENT_SECRET,
-  callbackURL: CALL_BACK_URL,
+  clientID: secret.GOOGLE_CLIENT_ID,
+  clientSecret: secret.GOOGLE_CLIENT_SECRET,
+  callbackURL: secret.CALL_BACK_URL,
 };
 
 const verify = async (accessToken: string, refreshToken: string, profile: Profile, cb: VerifyCallback) => {

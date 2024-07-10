@@ -1,13 +1,13 @@
 import morgan, { StreamOptions } from "morgan";
 import Logger from '../config/logs'
-import { NODE_ENV } from "../config/secret";
+import { secret } from "../config/secret";
 
 const stream: StreamOptions = {
     write: (message) => Logger.http(message)
 };
 
 const skip = () => {
-    return NODE_ENV !== "development";
+    return secret.NODE_ENV !== "development";
 };
 
 const morganMiddleware = morgan(

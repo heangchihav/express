@@ -1,9 +1,9 @@
 import session from "express-session";
-import { NODE_ENV, SESSION_SECRET } from "../config/secret";
+import { secret } from "../config/secret";
 
 export const sessionMiddleware = session({
-    secret: SESSION_SECRET,
+    secret: secret.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: NODE_ENV === 'production' }
+    cookie: { secure: secret.NODE_ENV === 'production' }
 })

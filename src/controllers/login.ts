@@ -7,7 +7,7 @@ import { NotFoundError } from '../errors/not-found';
 import { LoginSchema } from '../schema/login';
 import { generateAccessToken } from '../helpers/generateAccessToken';
 import { generateRefreshToken } from '../helpers/generateRefreshToken';
-import { NODE_ENV } from '../config/secret';
+import { secret } from '../config/secret';
 
 
 /**
@@ -36,7 +36,7 @@ export const login = async (req: Request, res: Response) => {
     // For web clients, set the refresh token in a secure cookie
     res.cookie("refreshToken", `Bearer ${refreshToken}`, {
         httpOnly: true,
-        secure: NODE_ENV === 'production', // set to true if using https
+        secure: secret.NODE_ENV === 'production', // set to true if using https
         sameSite: "strict", // adjust according to your needs
     });
     //For mobile clients, send the refresh token in the response body

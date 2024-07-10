@@ -1,6 +1,6 @@
 import { type Request, type Response, Router } from 'express'
 import passport from 'passport';
-import { NODE_ENV } from '../config/secret';
+import { secret } from '../config/secret';
 
 const googleAuthRoutes: Router = Router();
 
@@ -21,7 +21,7 @@ googleAuthRoutes.get('/google/callback',
         // For web clients, set the refresh token in a secure cookie
         res.cookie("refreshToken", `Bearer ${refreshToken}`, {
             httpOnly: true,
-            secure: NODE_ENV === 'production', // set to true if using https
+            secure: secret.NODE_ENV === 'production', // set to true if using https
             sameSite: "strict", // adjust according to your needs
         });
         //For mobile clients, send the refresh token in the response body
