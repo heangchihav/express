@@ -1,6 +1,6 @@
 import passport from "passport";
 import { secret } from "../config/secret";
-import prisma from "../libs/client";
+import prisma from "../libs/prisma";
 import { JwtPayload } from "jsonwebtoken";
 import { VerifiedCallback } from "passport-jwt";
 

@@ -1,10 +1,13 @@
 import passport from "passport";
 import { secret } from "../config/secret";
-import prisma from "../libs/client";
-import { Strategy as GoogleStrategy, Profile, VerifyCallback } from 'passport-google-oauth20'
+import prisma from "../libs/prisma";
+import {
+  Strategy as GoogleStrategy,
+  Profile,
+  VerifyCallback,
+} from "passport-google-oauth20";
 import { generateAccessToken } from "../helpers/generateAccessToken";
 import { generateRefreshToken } from "../helpers/generateRefreshToken";
-
 
 const options = {
   clientID: secret.GOOGLE_CLIENT_ID,
@@ -12,7 +15,12 @@ const options = {
   callbackURL: secret.CALL_BACK_URL,
 };
 
-const verify = async (accessToken: string, refreshToken: string, profile: Profile, cb: VerifyCallback) => {
+const verify = async (
+  accessToken: string,
+  refreshToken: string,
+  profile: Profile,
+  cb: VerifyCallback
+) => {
   try {
     // Find or create a user in the database
     const foundUser = await prisma.user.upsert({
@@ -25,7 +33,7 @@ const verify = async (accessToken: string, refreshToken: string, profile: Profil
       },
       update: {
         // Update any fields if necessary
-      }
+      },
     });
 
     const accessToken = generateAccessToken(foundUser);
@@ -39,5 +47,5 @@ const verify = async (accessToken: string, refreshToken: string, profile: Profil
   } catch (err) {
     return cb(err);
   }
-}
+};
 passport.use(new GoogleStrategy(options, verify));
