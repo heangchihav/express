@@ -2,9 +2,10 @@ import http from "http";
 import cluster from "cluster";
 import os from "os";
 import { Server } from "socket.io";
-import Logger from "./config/logs";
+import Logger from "./config/logger";
 import { secret } from "./config/secret";
 import app from "./app";
+import prisma from "./libs/prisma";
 
 // Get the number of CPUs
 const numCPUs = os.cpus().length;
@@ -59,5 +60,11 @@ if (cluster.isMaster) {
     Logger.info(
       `Worker ${process.pid} running server at http://${secret.HOST}:${secret.SERVER_PORT}/`
     );
+  });
+  // Handle graceful shutdown
+  process.on("SIGINT", async () => {
+    console.log("Shutting down...");
+    await prisma.$disconnect();
+    process.exit(0);
   });
 }

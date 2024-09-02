@@ -12,7 +12,7 @@ import cors from "cors";
 // Import configuration and routes
 import { corsOptions } from "./config/corsOption";
 import morganMiddleware from "./middlewares/morgan";
-import Logger, { errorLogger } from "./config/logs";
+import Logger, { errorLogger } from "./config/logger";
 import csrfProtection from "./middlewares/csrf";
 import { compressionMiddleware } from "./middlewares/compression";
 import { limiterMiddleware } from "./middlewares/limiter";
@@ -23,6 +23,7 @@ import { errorMiddleware } from "./middlewares/errors";
 // Initialize authentication strategies
 import "./strategies/jwtStrategy";
 import "./strategies/googleStrategy";
+import { deviceInfoMiddleware } from "./middlewares/deviceInfo";
 
 const app: Application = express();
 
@@ -67,6 +68,8 @@ app.use(passport.initialize());
 
 // CSRF Protection Middleware
 app.use(csrfProtection);
+
+app.use(deviceInfoMiddleware);
 
 // API Routes
 app.use("/api", rootRouter);
