@@ -16,9 +16,9 @@ export const deviceInfoMiddleware = async (
 
     const clientIp = requestIp.getClientIp(req);
     const ipAddress =
+      clientIp ||
       (req.headers["x-forwarded-for"] as string)?.split(",")[0].trim() ||
       req.connection.remoteAddress ||
-      clientIp ||
       req.socket.remoteAddress ||
       "";
 
@@ -27,7 +27,9 @@ export const deviceInfoMiddleware = async (
     const device = parser.getDevice();
     const os = parser.getOS();
     const browser = parser.getBrowser();
-    const deviceName = `${device.vendor || "Unknown"} ${device.model || "Device"}`;
+    const deviceName = `${device.vendor || "Unknown"} ${
+      device.model || "Device"
+    }`;
 
     const user = req.user as User;
 
@@ -76,7 +78,9 @@ export const deviceInfoMiddleware = async (
             method,
             statusCode: statusCode || 500,
             responseBody,
-            requestBody: JSON.stringify(sanitizeSensitiveInfo(req.body)) || "No request body",
+            requestBody:
+              JSON.stringify(sanitizeSensitiveInfo(req.body)) ||
+              "No request body",
             userId: user?.id || "Unauthenticated User",
           });
           resolve();

@@ -5,7 +5,15 @@ const sanitizeSensitiveInfo = (
   const sanitizedData = { ...data };
 
   // List of sensitive fields to mask
-  const sensitiveFields = ["password", "secret", "token","accessToken","csrfToken","passwordHash"];
+  const sensitiveFields = [
+    "password",
+    "passwordHash",
+    "secret",
+    "token",
+    "accessToken",
+    "refreshToken",
+    "csrfToken",
+  ];
 
   // Replace sensitive fields with asterisks or another placeholder
   for (const field of sensitiveFields) {

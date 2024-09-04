@@ -24,6 +24,7 @@ import { errorMiddleware } from "./middlewares/errors";
 import "./strategies/jwtStrategy";
 import "./strategies/googleStrategy";
 import { deviceInfoMiddleware } from "./middlewares/deviceInfo";
+import authMiddleware from "./middlewares/auth";
 
 const app: Application = express();
 
@@ -69,6 +70,10 @@ app.use(passport.initialize());
 // CSRF Protection Middleware
 app.use(csrfProtection);
 
+// Auth Middleware
+app.use(authMiddleware);
+
+// Device Information Middleware to capture user device
 app.use(deviceInfoMiddleware);
 
 // API Routes
