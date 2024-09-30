@@ -17,7 +17,7 @@ For signup or login, include the CSRF token obtained in Step 1 in the request he
 
 - **Request:**
   - **Method:** `POST`
-  - **Endpoint:** `</api/signup>` or `</api/login>`
+  - **Endpoint:** `</api/auth/signup>` or `</api/auth/login>`
   - **Headers:**
     - **`CSRF-Token:`** `12dSk0Zz-fq_QIEC481uzTbzxtM8QEjlYVF4`
   - **Body:**

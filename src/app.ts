@@ -23,8 +23,8 @@ import { errorMiddleware } from "./middlewares/errors";
 // Initialize authentication strategies
 import "./strategies/jwtStrategy";
 import "./strategies/googleStrategy";
-import { deviceInfoMiddleware } from "./middlewares/deviceInfo";
 import authMiddleware from "./middlewares/auth";
+import { userControlMiddleware } from "./middlewares/userControlMiddleware";
 
 const app: Application = express();
 
@@ -74,7 +74,7 @@ app.use(csrfProtection);
 app.use(authMiddleware);
 
 // Device Information Middleware to capture user device
-app.use(deviceInfoMiddleware);
+app.use(userControlMiddleware);
 
 // API Routes
 app.use("/api", rootRouter);

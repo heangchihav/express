@@ -1,5 +1,5 @@
 // Helper function to sanitize sensitive information
-const sanitizeSensitiveInfo = (
+export const sanitizeSensitiveInfo = (
   data: Record<string, any>
 ): Record<string, any> => {
   const sanitizedData = { ...data };
@@ -24,4 +24,4 @@ const sanitizeSensitiveInfo = (
 
   return sanitizedData;
 };
-export default sanitizeSensitiveInfo;
+
